@@ -1,0 +1,68 @@
+# Define region bounds
+
+change_box              all boundary p p s # group=all, parameter=boundary, p-periodic,s-non-p
+
+
+variable 		smalllow equal zlo+100 # Small group bounds
+variable 		smallhigh equal zlo+110
+
+
+variable 		biglow equal zlo+325
+variable 		bighigh equal zlo+400
+
+variable 		twolow equal zlo+300
+variable		twohigh equal zlo+310
+variable 		threelow equal zlo+600
+variable 		threehigh equal zlo+610
+variable 		fourlow equal zlo+900
+variable 		fourhigh equal zlo+910
+variable 		fivelow equal zlo+1300
+variable 		fivehigh equal zlo+1310
+variable 		sixlow equal zlo+1400
+variable 		sixhigh equal zlo+1410
+variable 		sevenlow equal zlo+1600
+variable 		sevenhigh equal zlo+1610
+variable 		eightlow equal zlo+2000
+variable 		eighthigh equal zlo+2010
+variable 		ninelow equal zlo+3000
+variable 		ninehigh equal zlo+3010
+variable 		tenlow equal zlo+3500
+variable 		tenhigh equal zlo+3510
+
+
+# Small groups
+region 			1 block INF INF INF INF ${smalllow} ${smallhigh} units box 
+region 			2 block INF INF INF INF ${twolow} ${twohigh} units box 
+region 			3 block INF INF INF INF ${threelow} ${threehigh} units box 
+region 			4 block INF INF INF INF ${fourlow} ${fourhigh} units box 
+region 			5 block INF INF INF INF ${fivelow} ${fivehigh} units box 
+region 			6 block INF INF INF INF ${sixlow} ${sixhigh} units box
+region 			7 block INF INF INF INF ${sevenlow} ${sevenhigh} units box
+region 			8 block INF INF INF INF ${eightlow} ${eighthigh} units box
+region 			9 block INF INF INF INF ${ninelow} ${ninehigh} units box
+region 			10 block INF INF INF INF ${tenlow} ${tenhigh} units box 
+
+# Large group
+region 			biggroup block INF INF INF INF ${biglow} ${bighigh} units box 
+
+# Define region groups
+
+
+group 			1 region 1
+group 			2 region 2
+group 			3 region 3
+group 			4 region 4
+group 			5 region 5
+group 			6 region 6
+group 			7 region 7
+group 			8 region 8
+group 			9 region 9
+group 			10 region 10
+
+group 			biggroup region biggroup
+
+
+
+
+
+

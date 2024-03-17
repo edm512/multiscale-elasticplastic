@@ -1,0 +1,27 @@
+
+# Computes for whole simulation
+compute                 vz      all property/atom vz
+compute                 vx      all property/atom vx
+compute                 vy      all property/atom vy
+compute                 myKE    all ke/atom
+compute                 myPE    all pe/atom
+compute                 temp2d  all temp/partial 1 1 0
+compute                 s all stress/atom temp2d
+compute                 pressure all pressure temp2d
+compute 		voronoi all voronoi/atom
+
+
+# Variables for whole simulation 
+
+variable                pzz   equal pzz  # axial stress
+variable                time equal dt*step
+variable                temp2d equal c_temp2d
+variable                pressure equal c_pressure 
+variable 		step equal step
+variable 		density equal density 
+variable                r equal ${step}
+variable                r0 equal $r
+variable ramp_step equal "step - v_r0"
+
+
+

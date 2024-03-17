@@ -1,0 +1,207 @@
+# Compute group info
+
+# Group 1
+# Voronoi volume
+compute v1 1 reduce ave c_voronoi[1]
+variable v1 equal c_v1
+# Temp in XY
+compute t1 1 temp/partial 1 1 0 
+variable t1 equal c_t1
+# Stress in x, y, z
+compute px1 1 reduce ave c_s[1]
+variable px1 equal c_px1 #/c_v1
+compute py1 1 reduce ave c_s[2]
+variable py1 equal c_py1 #/c_v1
+compute pz1 1 reduce ave c_s[3]
+variable pz1 equal c_pz1 #/c_v1
+
+variable p1 equal (c_px1+c_py1+c_pz1) #/(3*c_v1)
+
+# Velocity in z direction
+variable vz1 equal vcm(1,z)
+
+# Count
+variable c1 equal count(1)
+#####
+
+# Group 2
+# Voronoi volume
+compute v2 2 reduce ave c_voronoi[1]
+variable v2 equal c_v2
+# Temp in XY
+compute t2 2 temp/partial 1 1 0
+variable t2 equal c_t2
+# Stress in x, y, z
+compute px2 2 reduce ave c_s[1]
+variable px2 equal c_px2 # /c_v1
+compute py2 2 reduce ave c_s[2]
+variable py2 equal c_py2 #/c_v1
+compute pz2 2 reduce ave c_s[3]
+variable pz2 equal c_pz2 #/c_v1
+variable p2 equal (c_px2+c_py2+c_pz2) #/(3*c_v2)
+# Velocity in z direction
+variable vz2 equal vcm(2,z)
+# Count
+variable c2 equal count(2)
+
+# Group 3
+# Voronoi volume
+compute v3 3 reduce ave c_voronoi[1]
+variable v3 equal c_v3
+# Temp in XY
+compute t3 3 temp/partial 1 1 0
+variable t3 equal c_t3
+# Stress in x, y, z
+compute px3 3 reduce ave c_s[1]
+variable px3 equal c_px3 # /c_v1
+compute py3 3 reduce ave c_s[2]
+variable py3 equal c_py3 #/c_v1
+compute pz3 3 reduce ave c_s[3]
+variable pz3 equal c_pz3 #/c_v1
+variable p3 equal (c_px3+c_py3+c_pz3) #/(3*c_v3)
+# Velocity in z direction
+variable vz3 equal vcm(3,z)
+# Count
+variable c3 equal count(3)
+
+# Group 4
+# Voronoi volume
+compute v4 4 reduce ave c_voronoi[1]
+variable v4 equal c_v4
+# Temp in XY
+compute t4 4 temp/partial 1 1 0
+variable t4 equal c_t4
+# Stress in x, y, z
+compute px4 4 reduce ave c_s[1]
+variable px4 equal c_px4 # /c_v1
+compute py4 4 reduce ave c_s[2]
+variable py4 equal c_py4 #/c_v1
+compute pz4 4 reduce ave c_s[3]
+variable pz4 equal c_pz4 #/c_v1
+variable p4 equal (c_px4+c_py4+c_pz4) #/(4*c_v4)
+# Velocity in z direction
+variable vz4 equal vcm(4,z)
+# Count
+variable c4 equal count(4)
+
+# Group 5
+# Voronoi volume
+compute v5 5 reduce ave c_voronoi[1]
+variable v5 equal c_v5
+# Temp in XY
+compute t5 5 temp/partial 1 1 0
+variable t5 equal c_t5
+# Stress in x, y, z
+compute px5 5 reduce ave c_s[1]
+variable px5 equal c_px5 # /c_v1
+compute py5 5 reduce ave c_s[2]
+variable py5 equal c_py5 #/c_v1
+compute pz5 5 reduce ave c_s[3]
+variable pz5 equal c_pz5 #/c_v1
+variable p5 equal (c_px5+c_py5+c_pz5) #/(5*c_v5)
+# Velocity in z direction
+variable vz5 equal vcm(5,z)
+# Count
+variable c5 equal count(5)
+
+# Group 6
+# Voronoi volume
+compute v6 6 reduce ave c_voronoi[1]
+variable v6 equal c_v6
+# Temp in XY
+compute t6 6 temp/partial 1 1 0
+variable t6 equal c_t6
+# Stress in x, y, z
+compute px6 6 reduce ave c_s[1]
+variable px6 equal c_px6 # /c_v1
+compute py6 6 reduce ave c_s[2]
+variable py6 equal c_py6 #/c_v1
+compute pz6 6 reduce ave c_s[3]
+variable pz6 equal c_pz6 #/c_v1
+variable p6 equal (c_px6+c_py6+c_pz6) #/(6*c_v6)
+# Velocity in z direction
+variable vz6 equal vcm(6,z)
+# Count
+variable c6 equal count(6)
+
+# Group 7
+# Voronoi volume
+compute v7 7 reduce ave c_voronoi[1]
+variable v7 equal c_v7
+# Temp in XY
+compute t7 7 temp/partial 1 1 0
+variable t7 equal c_t7
+# Stress in x, y, z
+compute px7 7 reduce ave c_s[1]
+variable px7 equal c_px7 # /c_v1
+compute py7 7 reduce ave c_s[2]
+variable py7 equal c_py7 #/c_v1
+compute pz7 7 reduce ave c_s[3]
+variable pz7 equal c_pz7 #/c_v1
+variable p7 equal (c_px7+c_py7+c_pz7) #/(7*c_v7)
+# Velocity in z direction
+variable vz7 equal vcm(7,z)
+# Count
+variable c7 equal count(7)
+
+# Group 8
+# Voronoi volume
+compute v8 8 reduce ave c_voronoi[1]
+variable v8 equal c_v8
+# Temp in XY
+compute t8 8 temp/partial 1 1 0
+variable t8 equal c_t8
+# Stress in x, y, z
+compute px8 8 reduce ave c_s[1]
+variable px8 equal c_px8 # /c_v1
+compute py8 8 reduce ave c_s[2]
+variable py8 equal c_py8 #/c_v1
+compute pz8 8 reduce ave c_s[3]
+variable pz8 equal c_pz8 #/c_v1
+variable p8 equal (c_px8+c_py8+c_pz8) #/(8*c_v8)
+# Velocity in z direction
+variable vz8 equal vcm(8,z)
+# Count
+variable c8 equal count(8)
+
+# Group 9
+# Voronoi volume
+compute v9 9 reduce ave c_voronoi[1]
+variable v9 equal c_v9
+# Temp in XY
+compute t9 9 temp/partial 1 1 0
+variable t9 equal c_t9
+# Stress in x, y, z
+compute px9 9 reduce ave c_s[1]
+variable px9 equal c_px9 # /c_v1
+compute py9 9 reduce ave c_s[2]
+variable py9 equal c_py9 #/c_v1
+compute pz9 9 reduce ave c_s[3]
+variable pz9 equal c_pz9 #/c_v1
+variable p9 equal (c_px9+c_py9+c_pz9) #/(9*c_v9)
+# Velocity in z direction
+variable vz9 equal vcm(9,z)
+# Count
+variable c9 equal count(9)
+
+# Group 10
+# Voronoi volume
+compute v10 10 reduce ave c_voronoi[1]
+variable v10 equal c_v10
+# Temp in XY
+compute t10 10 temp/partial 1 1 0
+variable t10 equal c_t10
+# Stress in x, y, z
+compute px10 10 reduce ave c_s[1]
+variable px10 equal c_px10 # /c_v1
+compute py10 10 reduce ave c_s[2]
+variable py10 equal c_py10 #/c_v1
+compute pz10 10 reduce ave c_s[3]
+variable pz10 equal c_pz10 #/c_v1
+variable p10 equal (c_px10+c_py10+c_pz10) #/(10*c_v10)
+# Velocity in z direction
+variable vz10 equal vcm(10,z)
+# Count
+variable c10 equal count(10)
+
+

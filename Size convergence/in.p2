@@ -1,0 +1,17 @@
+create_box              1 sim_box
+
+
+create_atoms            1 box
+group atom_box          region sim_box  
+
+
+
+mass                    * 63.546
+
+
+pair_style              eam/alloy
+pair_coeff              * * Cu_mishin1.eam.alloy Cu
+
+
+# Relax box dimensions
+reset_timestep          0

@@ -1,0 +1,77 @@
+fix                     equilibration all npt temp 300.0 300.0 0.1 iso 0 0 1.0 drag 1
+
+thermo                  500 # output thermodynamics every 100 timesteps
+thermo_style            custom step pxx pyy pzz lx ly lz temp etotal
+
+#restart 10000 restart_30_temp160k_131020_100_seed1.equil
+
+run                     5000
+unfix equilibration
+
+
+fix thermostat all nve
+
+compute                 vz      all property/atom vz
+compute                 vx      all property/atom vx
+compute                 vy      all property/atom vy
+compute                 myKE    all ke/atom
+compute                 myPE    all pe/atom
+
+compute                 temp2d  all temp/partial 1 1 0
+compute                 s all stress/atom temp2d
+
+
+compute                 pressure all pressure temp2d
+compute 		virial all pressure temp2d virial
+compute 		tempall all temp
+
+variable 		tempall equal c_tempall
+
+variable                pzz   equal pzz  # axial stress
+
+variable                time equal dt*step
+variable                temp2d equal c_temp2d
+variable                pressure equal c_pressure
+variable 		virial equal c_virial 
+
+variable 		virial_pzz equal c_virial[3]
+
+variable 		density equal density 
+
+variable 		step equal step
+
+variable 		density equal density 
+
+variable                r equal ${step}
+variable                r0 equal $r
+
+variable ramp_step equal "step - v_r0"
+variable Pzz equal pzz
+variable Pxx equal pxx
+variable Pyy equal pyy
+variable Pxy equal pxy
+variable Pxz equal pxz
+variable Pyz equal pyz
+variable Lz equal lz
+
+compute vorovol all voronoi/atom
+compute avevol all reduce ave c_vorovol[1]
+variable volume equal c_avevol
+
+compute SxV all reduce ave c_s[1]
+compute SyV all reduce ave c_s[2]
+compute SzV all reduce ave c_s[3]
+
+variable 		Sx equal c_SxV/c_avevol
+variable 		Sy equal c_SyV/c_avevol
+variable 		Sz equal c_SzV/c_avevol
+
+
+variable                L0 equal ${Lz}
+
+variable Vx equal vcm(all,x)
+variable Vy equal vcm(all,y)
+variable Vz equal vcm(all,z)
+
+
+

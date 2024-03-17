@@ -1,0 +1,36 @@
+reset_timestep          0
+
+velocity                all create 600 23432 rot yes dist gaussian
+
+# Define regions
+
+variable                plow equal zlo # Piston bounds
+variable                phigh equal zlo+25
+
+variable                tlow equal zhi-20 # Tamper bounds
+variable                thigh equal zhi 
+
+region 			piston block INF INF INF INF INF ${phigh} units box
+region                  bulk block INF INF INF INF ${phigh} ${tlow} units box
+region                  tamper block INF INF INF INF ${tlow} INF units box
+
+group                   piston region piston
+group                   tamper region tamper
+group                   bulk region bulk
+
+velocity                tamper set 0.0 0.0 0.0 sum no
+fix                     tamp tamper setforce 0.0 0.0 0.0
+velocity                piston set 0.0 0.0 0.0 sum no
+fix pist               piston setforce 0.0 0.0 0.0
+
+fix                     equilibration bulk npt temp 300.0 300.0 0.1 iso 0 0 1.0 drag 1
+
+thermo                  500 # output thermodynamics every 500 timesteps
+thermo_style            custom step pxx pyy pzz lx ly lz temp etotal
+
+
+dump equil                         all cfg 500 dump.ramp_equil.*.cfg mass type xs ys zs id vz vx vy
+
+run                   5000
+unfix equilibration
+undump equil 

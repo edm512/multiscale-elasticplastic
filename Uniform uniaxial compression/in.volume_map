@@ -1,0 +1,146 @@
+clear
+units                   metal
+dimension               3
+boundary                p p p
+atom_style              atomic
+atom_modify             map array
+
+lattice                 fcc 3.6149 orient x 0 1 -1 orient y -2 1 1 orient z 1 1 1 spacing 1.4142135624 2.4494897428 1.7320508076
+
+region                  sim_box block 0.0 30.0 0.0 30.0 0.0 30.0 units lattice
+create_box              1 sim_box
+
+
+create_atoms            1 box
+group atom_box          region sim_box  
+
+
+
+mass                    * 63.546
+
+
+pair_style              eam/alloy
+pair_coeff              * * Cu_mishin1.eam.alloy Cu
+
+
+# Relax box dimensions
+reset_timestep          0
+velocity                all create 600 5931 rot yes dist gaussian
+
+
+fix                     equilibration all npt temp 300.0 300.0 0.1 iso 0 0 1.0 drag 1
+
+thermo                  500 # output thermodynamics every 100 timesteps
+thermo_style            custom step pxx pyy pzz lx ly lz temp etotal
+
+
+
+run                     5000
+unfix equilibration
+
+
+timestep 0.01
+
+
+fix thermostat all nve
+
+compute                 vz      all property/atom vz
+compute                 vx      all property/atom vx
+compute                 vy      all property/atom vy
+compute                 myKE    all ke/atom
+compute                 myPE    all pe/atom
+
+compute                 temp2d  all temp/partial 1 1 0
+compute                 s all stress/atom temp2d
+
+
+compute                 pressure all pressure temp2d
+compute 		virial all pressure temp2d virial
+compute 		tempall all temp
+
+variable 		tempall equal c_tempall
+
+variable                pzz   equal pzz  # axial stress
+
+variable                time equal dt*step
+variable                temp2d equal c_temp2d
+variable                pressure equal c_pressure
+variable 		virial equal c_virial 
+
+variable 		virial_pzz equal c_virial[3]
+
+variable 		density equal density 
+
+variable 		step equal step
+
+variable 		density equal density 
+
+variable                r equal ${step}
+variable                r0 equal $r
+
+variable ramp_step equal "step - v_r0"
+variable Pzz equal pzz
+variable Pxx equal pxx
+variable Pyy equal pyy
+variable Pxy equal pxy
+variable Pxz equal pxz
+variable Pyz equal pyz
+variable Lz equal lz
+
+compute vorovol all voronoi/atom
+compute avevol all reduce ave c_vorovol[1]
+variable volume equal c_avevol
+
+compute SxV all reduce ave c_s[1]
+compute SyV all reduce ave c_s[2]
+compute SzV all reduce ave c_s[3]
+
+variable 		Sx equal c_SxV/c_avevol
+variable 		Sy equal c_SyV/c_avevol
+variable 		Sz equal c_SzV/c_avevol
+
+
+variable                L0 equal ${Lz}
+
+variable Vx equal vcm(all,x)
+variable Vy equal vcm(all,y)
+variable Vz equal vcm(all,z)
+
+
+
+variable run_name string 021221_smallervoid
+
+
+variable fvol1 file g5_021221_ts0.01scaledvol.txt
+variable normvol equal v_fvol1
+variable normvoladvance equal next(fvol1)
+
+
+variable frate1 file g5_021221_ts0.01gradvol.txt
+variable rate equal v_frate1
+variable rateadvance equal next(frate1)
+
+variable displace equal "-(v_L0 - (v_L0 * v_normvol))"
+variable ddx equal "-(v_L0 * v_rate)"
+fix 2 all deform 1 z variable v_displace v_ddx remap x
+
+fix data2 all print 1 "${step}, ${normvoladvance}, ${rateadvance}" file test.output
+
+
+thermo 100
+thermo_style custom step pxx pyy pzz v_temp2d v_ramp_step v_normvol v_rate lz v_displace v_ddx
+thermo_modify flush yes
+
+fix data all print 10 "${step}, ${time}, ${volume}, ${temp2d}, ${Pxx}, ${Pyy}, ${Pzz}, ${Pxy}, ${Pxz}, ${Pyz}, ${Lz}, ${density}, ${tempall}, ${Vx}, ${Vy}, ${Vz}, ${displace}, ${ddx}, ${Sx}, ${Sy}, ${Sz}" file g5_volmap_${run_name}.txt
+
+#dump 1 all custom 2000 dump.text.volmap_${run_name}.* id mass type x y z id vz vx vy c_s[1] c_s[2] c_s[3]
+dump 2 all cfg 5000 dump.volmap_g5_${run_name}_seed5931_2.*.cfg mass type xs ys zs id vz vx vy
+
+region void1 sphere 52.0 52.0 52.0 7.0 side in units box
+group void1 region void1
+delete_atoms group void1
+
+
+
+run 14898
+

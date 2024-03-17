@@ -1,0 +1,15 @@
+
+variable displace equal "-(v_L0 - (v_L0 * v_normvol))"
+variable ddx equal "-(v_L0 * v_rate)"
+fix 2 all deform 1 z variable v_displace v_ddx remap x
+
+
+thermo 1000
+thermo_style custom step pxx pyy pzz pxy pxz pyz v_temp2d v_ramp_step v_normvol v_rate lz v_displace v_ddx
+thermo_modify flush yes
+
+fix data all print 100 "${step}, ${time}, ${volume}, ${temp2d}, ${Pxx}, ${Pyy}, ${Pzz}, ${Pxy}, ${Pxz}, ${Pyz}, ${Lz}, ${density}, ${tempall}, ${Vx}, ${Vy}, ${Vz}, ${displace}, ${ddx}, ${voidSize}, ${Sx}, ${Sy}, ${Sz}" file ${run_name}.txt
+
+fix data2 all print 1 "${normvoladvance}, ${rateadvance}" file test.output
+
+

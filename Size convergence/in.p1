@@ -1,0 +1,10 @@
+clear
+units                   metal
+dimension               3
+boundary                p p p
+atom_style              atomic
+atom_modify             map array
+
+lattice                 fcc 3.6149 orient x 0 1 -1 orient y -2 1 1 orient z 1 1 1 spacing 1.4142135624 2.4494897428 1.7320508076
+
+

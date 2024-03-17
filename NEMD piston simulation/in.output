@@ -1,0 +1,20 @@
+# Output
+
+variable filename string 021221
+
+fix g1 1 print 100 "${step}, ${time}, ${c1}, ${v1}, ${p1}, ${px1}, ${py1}, ${pz1}, ${t1}, ${vz1}" file g1_${filename}.txt
+fix g2 2 print 100 "${step}, ${time}, ${c2}, ${v2}, ${p2}, ${px2}, ${py2}, ${pz2}, ${t2}, ${vz2}" file g2_${filename}.txt
+fix g3 3 print 100 "${step}, ${time}, ${c3}, ${v3}, ${p3}, ${px3}, ${py3}, ${pz3}, ${t3}, ${vz3}" file g3_${filename}.txt
+fix g4 4 print 100 "${step}, ${time}, ${c4}, ${v4}, ${p4}, ${px4}, ${py4}, ${pz4}, ${t4}, ${vz4}" file g4_${filename}.txt
+fix g5 5 print 100 "${step}, ${time}, ${c5}, ${v5}, ${p5}, ${px5}, ${py5}, ${pz5}, ${t5}, ${vz5}" file g5_${filename}.txt
+fix g6 6 print 100 "${step}, ${time}, ${c6}, ${v6}, ${p6}, ${px6}, ${py6}, ${pz6}, ${t6}, ${vz6}" file g6_${filename}.txt
+fix g7 7 print 100 "${step}, ${time}, ${c7}, ${v7}, ${p7}, ${px7}, ${py7}, ${pz7}, ${t7}, ${vz7}" file g7_${filename}.txt
+fix g8 8 print 100 "${step}, ${time}, ${c8}, ${v8}, ${p8}, ${px8}, ${py8}, ${pz8}, ${t8}, ${vz8}" file g8_${filename}.txt
+fix g9 9 print 100 "${step}, ${time}, ${c9}, ${v9}, ${p9}, ${px9}, ${py9}, ${pz9}, ${t9}, ${vz9}" file g9_${filename}.txt
+fix g10 10 print 100 "${step}, ${time}, ${c10}, ${v10}, ${p10}, ${px10}, ${py10}, ${pz10}, ${t10}, ${vz10}" file g10_${filename}.txt
+
+dump 1                  all custom 500 dump.text.ramp_${filename}.* id mass type x y z id vz vx vy c_s[1] c_s[2] c_s[3] 
+
+
+
+

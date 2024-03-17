@@ -1,0 +1,8 @@
+numpy 
+scipy
+pandas
+keras
+sys
+os
+subprocess
+glob
